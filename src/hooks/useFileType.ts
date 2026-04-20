@@ -27,6 +27,8 @@ const mimeMap: Record<string, string> = {
   'ogg': 'video/ogg',
   'mp3': 'audio/mpeg',
   'wav': 'audio/wav',
+  'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'doc': 'application/msword',
 };
 
 function getMimeFromUrl(url: string): string | null {

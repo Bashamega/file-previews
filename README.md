@@ -7,6 +7,16 @@ A dynamic, extensible React component library for previewing files from URLs.
 - **Extensible Registry**: Easy to add support for new file types (Video, PDF, etc.).
 - **TypeScript First**: Full type safety for props and registry handlers.
 
+## Supported File Types
+The following file types are supported out of the box:
+
+- **Images**: All `image/*` types (e.g., PNG, JPEG, GIF, SVG, WebP, etc.)
+- **Audio**: All `audio/*` types (e.g., MP3, WAV, OGG)
+- **Video**: All `video/*` types (e.g., MP4, WebM)
+- **PDF**: PDF documents (`application/pdf`)
+- **Text/Code**: Plain text, JSON, JavaScript, and XML
+- **Word Documents**: `.doc` and `.docx` files
+
 ## Installation
 ```bash
 npm install react-file-previews
