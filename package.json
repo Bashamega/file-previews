@@ -1,6 +1,6 @@
 {
   "name": "react-file-previews",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "main": "./dist/react-file-previews.umd.cjs",
   "module": "./dist/react-file-previews.js",

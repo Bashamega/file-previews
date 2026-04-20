@@ -5,6 +5,8 @@ import { VideoFilePreview } from './file-preview/video-file-preview';
 import { PdfFilePreview } from './file-preview/pdf-file-preview';
 import { TextFilePreview } from './file-preview/text-file-preview';
 import { WordDocumentFilePreview } from './file-preview/word-document-file-preview';
+import { ExcelFilePreview } from './file-preview/excel-file-preview';
+import { PowerPointFilePreview } from './file-preview/powerpoint-file-preview';
 
 export interface PreviewHandlerProps {
   url: string;
@@ -49,6 +51,18 @@ export const previewRegistry: RegistryEntry[] = [
       mimeType === 'application/msword' || 
       mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     component: WordDocumentFilePreview as PreviewHandler,
+  },
+  {
+    test: (mimeType: string) => 
+      mimeType === 'application/vnd.ms-excel' || 
+      mimeType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    component: ExcelFilePreview as PreviewHandler,
+  },
+  {
+    test: (mimeType: string) => 
+      mimeType === 'application/vnd.ms-powerpoint' || 
+      mimeType === 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    component: PowerPointFilePreview as PreviewHandler,
   },
 ];
 

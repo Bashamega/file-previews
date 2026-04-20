@@ -16,6 +16,8 @@ The following file types are supported out of the box:
 - **PDF**: PDF documents (`application/pdf`)
 - **Text/Code**: Plain text, JSON, JavaScript, and XML
 - **Word Documents**: `.doc` and `.docx` files
+- **Excel Spreadsheets**: `.xls` and `.xlsx` files
+- **PowerPoint Presentations**: `.ppt` and `.pptx` files
 
 ## Installation
 ```bash
