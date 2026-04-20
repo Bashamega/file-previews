@@ -1,9 +1,10 @@
 import React from 'react';
-import { useFileType } from '../hooks/useFileType';
+import { useFileType, DetectionMethod } from '../hooks/useFileType';
 import { getPreviewComponent } from '../registry';
 
 export interface FilePreviewProps {
   url: string;
+  method?: DetectionMethod;
   fallback?: React.ReactNode;
   loadingComponent?: React.ReactNode;
   errorComponent?: (error: Error) => React.ReactNode;
@@ -11,11 +12,12 @@ export interface FilePreviewProps {
 
 export const FilePreview: React.FC<FilePreviewProps> = ({
   url,
+  method = 'request',
   fallback = <div>Unsupported file type</div>,
   loadingComponent = <div>Loading preview...</div>,
   errorComponent = (error) => <div>Error loading preview: {error.message}</div>,
 }) => {
-  const { mimeType, loading, error } = useFileType(url);
+  const { mimeType, loading, error } = useFileType(url, method);
 
   if (loading) {
     return <>{loadingComponent}</>;

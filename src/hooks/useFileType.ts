@@ -6,7 +6,42 @@ export interface FileTypeInfo {
   error: Error | null;
 }
 
-export function useFileType(url: string): FileTypeInfo {
+export type DetectionMethod = 'request' | 'url';
+
+const mimeMap: Record<string, string> = {
+  'jpg': 'image/jpeg',
+  'jpeg': 'image/jpeg',
+  'png': 'image/png',
+  'gif': 'image/gif',
+  'svg': 'image/svg+xml',
+  'webp': 'image/webp',
+  'bmp': 'image/bmp',
+  'ico': 'image/x-icon',
+  'pdf': 'application/pdf',
+  'txt': 'text/plain',
+  'html': 'text/html',
+  'htm': 'text/html',
+  'json': 'application/json',
+  'mp4': 'video/mp4',
+  'webm': 'video/webm',
+  'ogg': 'video/ogg',
+  'mp3': 'audio/mpeg',
+  'wav': 'audio/wav',
+};
+
+function getMimeFromUrl(url: string): string | null {
+  try {
+    const urlObj = new URL(url, 'http://dummy.com');
+    const pathname = urlObj.pathname;
+    const extension = pathname.split('.').pop()?.toLowerCase();
+    return extension ? mimeMap[extension] || null : null;
+  } catch (err) {
+    const extension = url.split(/[#?]/)[0].split('.').pop()?.toLowerCase();
+    return extension ? mimeMap[extension] || null : null;
+  }
+}
+
+export function useFileType(url: string, method: DetectionMethod = 'request'): FileTypeInfo {
   const [info, setInfo] = useState<FileTypeInfo>({
     mimeType: null,
     loading: true,
@@ -16,8 +51,17 @@ export function useFileType(url: string): FileTypeInfo {
   useEffect(() => {
     let isMounted = true;
 
-    async function fetchType() {
+    async function detect() {
       setInfo({ mimeType: null, loading: true, error: null });
+
+      if (method === 'url') {
+        const mimeType = getMimeFromUrl(url);
+        if (isMounted) {
+          setInfo({ mimeType, loading: false, error: null });
+        }
+        return;
+      }
+
       try {
         const response = await fetch(url, { method: 'HEAD' });
         if (!isMounted) return;
@@ -26,8 +70,6 @@ export function useFileType(url: string): FileTypeInfo {
           const contentType = response.headers.get('content-type');
           setInfo({ mimeType: contentType, loading: false, error: null });
         } else {
-          // Fallback if HEAD is not allowed or failed, try a small GET range or just assume based on extension if needed
-          // For now, let's just fail if HEAD fails
           throw new Error(`Failed to fetch file type: ${response.statusText}`);
         }
       } catch (err) {
@@ -40,12 +82,12 @@ export function useFileType(url: string): FileTypeInfo {
       }
     }
 
-    fetchType();
+    detect();
 
     return () => {
       isMounted = false;
     };
-  }, [url]);
+  }, [url, method]);
 
   return info;
 }
