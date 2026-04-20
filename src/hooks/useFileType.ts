@@ -33,6 +33,7 @@ const mimeMap: Record<string, string> = {
   'xls': 'application/vnd.ms-excel',
   'pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
   'ppt': 'application/vnd.ms-powerpoint',
+  'csv': 'text/csv',
 };
 
 function getMimeFromUrl(url: string): string | null {

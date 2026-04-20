@@ -7,6 +7,7 @@ import { TextFilePreview } from './file-preview/text-file-preview';
 import { WordDocumentFilePreview } from './file-preview/word-document-file-preview';
 import { ExcelFilePreview } from './file-preview/excel-file-preview';
 import { PowerPointFilePreview } from './file-preview/powerpoint-file-preview';
+import { CsvFilePreview } from './file-preview/csv-file-preview';
 
 export interface PreviewHandlerProps {
   url: string;
@@ -36,6 +37,10 @@ export const previewRegistry: RegistryEntry[] = [
   {
     test: (mimeType: string) => mimeType === 'application/pdf',
     component: PdfFilePreview as PreviewHandler,
+  },
+  {
+    test: (mimeType: string) => mimeType === 'text/csv',
+    component: CsvFilePreview as PreviewHandler,
   },
   {
     test: (mimeType: string) => 

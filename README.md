@@ -14,6 +14,7 @@ The following file types are supported out of the box:
 - **Audio**: All `audio/*` types (e.g., MP3, WAV, OGG)
 - **Video**: All `video/*` types (e.g., MP4, WebM)
 - **PDF**: PDF documents (`application/pdf`)
+- **CSV**: CSV spreadsheets (`text/csv`)
 - **Text/Code**: Plain text, JSON, JavaScript, and XML
 - **Word Documents**: `.doc` and `.docx` files
 - **Excel Spreadsheets**: `.xls` and `.xlsx` files
