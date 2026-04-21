@@ -53,7 +53,9 @@ export const previewRegistry: RegistryEntry[] = [
       mimeType === 'text/plain' ||
       mimeType === 'application/json' || 
       mimeType === 'application/javascript' ||
-      mimeType === 'application/xml',
+      mimeType === 'application/xml' ||
+      mimeType === 'application/x-yaml' ||
+      mimeType === 'text/yaml',
     component: TextFilePreview as PreviewHandler,
   },
   {

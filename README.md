@@ -17,6 +17,7 @@ The following file types are supported out of the box:
 - **CSV**: CSV spreadsheets (`text/csv`)
 - **Markdown**: Markdown documents (`text/markdown`) with Preview and Code tabs
 - **Text/Code**: Plain text, JSON, JavaScript, and XML
+- **YAML**: YAML files (`application/x-yaml`, `text/yaml`)
 - **Word Documents**: `.doc` and `.docx` files
 - **Excel Spreadsheets**: `.xls` and `.xlsx` files
 - **PowerPoint Presentations**: `.ppt` and `.pptx` files

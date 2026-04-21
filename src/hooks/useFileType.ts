@@ -36,6 +36,8 @@ const mimeMap: Record<string, string> = {
   'csv': 'text/csv',
   'md': 'text/markdown',
   'markdown': 'text/markdown',
+  'yaml': 'application/x-yaml',
+  'yml': 'application/x-yaml',
 };
 
 function getMimeFromUrl(url: string): string | null {
@@ -91,6 +93,10 @@ export function useFileType(url: string, method: DetectionMethod = 'request'): F
             // If extension indicates markdown, return the correct mime type
             if (urlMime === 'text/markdown') {
               contentType = 'text/markdown';
+            }
+            // If extension indicates yaml/yml, return the correct mime type
+            if (urlMime === 'application/x-yaml') {
+              contentType = 'application/x-yaml';
             }
           }
           setInfo({ mimeType: contentType, loading: false, error: null });
