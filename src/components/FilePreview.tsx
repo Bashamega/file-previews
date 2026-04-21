@@ -8,6 +8,8 @@ export interface FilePreviewProps {
   fallback?: React.ReactNode;
   loadingComponent?: React.ReactNode;
   errorComponent?: (error: Error) => React.ReactNode;
+  editable?: boolean;
+  onSave?: (content: string | Blob) => void | Promise<void>;
 }
 
 export const FilePreview: React.FC<FilePreviewProps> = ({
@@ -16,6 +18,8 @@ export const FilePreview: React.FC<FilePreviewProps> = ({
   fallback = <div>Unsupported file type</div>,
   loadingComponent = <div>Loading preview...</div>,
   errorComponent = (error) => <div>Error loading preview: {error.message}</div>,
+  editable = false,
+  onSave,
 }) => {
   const { mimeType, loading, error } = useFileType(url, method);
 
@@ -37,5 +41,5 @@ export const FilePreview: React.FC<FilePreviewProps> = ({
     return <>{fallback}</>;
   }
 
-  return <PreviewComponent url={url} mimeType={mimeType} />;
+  return <PreviewComponent url={url} mimeType={mimeType} editable={editable} onSave={onSave} />;
 };

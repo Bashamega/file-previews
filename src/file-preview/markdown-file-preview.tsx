@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import Editor from '@monaco-editor/react';
 import { FilePreviewProps } from './file-preview-props';
 import { DefaultFilePreview } from './default-file-preview';
 
 export function MarkdownFilePreview(props: FilePreviewProps) {
-  const { url } = props;
+  const { url, editable, onSave, mimeType } = props;
   const [isLoading, setIsLoading] = useState(true);
   const [isFailed, setIsFailed] = useState(false);
   const [contents, setContents] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'preview' | 'code'>('preview');
+  const [activeTab, setActiveTab] = useState<'preview' | 'code' | 'edit'>('preview');
+  const [editedContent, setEditedContent] = useState<string>('');
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (editable) {
+      setActiveTab('edit');
+    } else {
+      setActiveTab('preview');
+    }
+  }, [editable]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -21,6 +33,7 @@ export function MarkdownFilePreview(props: FilePreviewProps) {
       })
       .then((text) => {
         setContents(text);
+        setEditedContent(text);
       })
       .catch(() => {
         setIsFailed(true);
@@ -53,35 +66,64 @@ export function MarkdownFilePreview(props: FilePreviewProps) {
     fontSize: '14px',
   });
 
+  const handleSave = async () => {
+    if (!onSave) return;
+    setIsSaving(true);
+    setSaveError(null);
+    try {
+      await onSave(editedContent);
+    } catch (err: any) {
+      setSaveError(err?.message || 'Failed to save');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
-    <div style={{ 
-      display: 'flex', 
-      flexDirection: 'column', 
-      height: '100%', 
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
       width: '100%',
       backgroundColor: '#fff',
       border: '1px solid #dee2e6',
       borderRadius: '4px',
       overflow: 'hidden'
     }}>
-      <div style={{ 
-        display: 'flex', 
-        borderBottom: '1px solid #dee2e6', 
+      <div style={{
+        display: 'flex',
+        borderBottom: '1px solid #dee2e6',
         backgroundColor: '#f8f9fa'
       }}>
-        <button style={tabStyle(activeTab === 'preview')} onClick={() => setActiveTab('preview')}>
+        <button
+          style={tabStyle(activeTab === 'preview')}
+          onClick={() => setActiveTab('preview')}
+        >
           Preview
         </button>
-        <button style={tabStyle(activeTab === 'code')} onClick={() => setActiveTab('code')}>
+        <button
+          style={tabStyle(activeTab === 'code')}
+          onClick={() => setActiveTab('code')}
+        >
           Code Preview
         </button>
+        {editable && (
+          <button
+            style={tabStyle(activeTab === 'edit')}
+            onClick={() => setActiveTab('edit')}
+          >
+            Edit
+          </button>
+        )}
       </div>
       <div style={{ flex: 1, overflow: 'auto', padding: '20px' }}>
         {activeTab === 'preview' ? (
           <div className="markdown-preview" style={{ lineHeight: '1.6', color: '#212529' }}>
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{contents}</ReactMarkdown>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {editable ? editedContent : contents}
+            </ReactMarkdown>
           </div>
-        ) : (
+        ) : activeTab === 'code' ? (
           <pre
             style={{
               whiteSpace: 'pre-wrap',
@@ -96,8 +138,48 @@ export function MarkdownFilePreview(props: FilePreviewProps) {
               border: '1px solid #e9ecef'
             }}
           >
-            {contents}
+            {editable ? editedContent : contents}
           </pre>
+        ) : (
+          // Edit tab using Monaco Editor
+          <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <div style={{ flex: 1, minHeight: 200, marginBottom: '14px', border: '1px solid #e2e5e7', borderRadius: '3px', overflow: 'hidden' }}>
+              <Editor
+                height="300px"
+                language="markdown"
+                theme="vs-dark"
+                value={editedContent}
+                onChange={(value) => setEditedContent(value ?? '')}
+                options={{
+                  fontSize: 14,
+                  minimap: { enabled: false },
+                  scrollBeyondLastLine: false,
+                  fontFamily: 'SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace',
+                  wordWrap: 'on',
+                  automaticLayout: true,
+                }}
+              />
+            </div>
+            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+              <button
+                onClick={handleSave}
+                disabled={isSaving || !onSave}
+                style={{
+                  background: '#007bff',
+                  color: '#fff',
+                  padding: '8px 20px',
+                  fontSize: '14px',
+                  border: 'none',
+                  borderRadius: '3px',
+                  cursor: isSaving || !onSave ? 'not-allowed' : 'pointer',
+                  fontWeight: '600'
+                }}
+              >
+                {isSaving ? 'Saving...' : 'Save'}
+              </button>
+              {saveError && <span style={{ color: 'red', fontSize: '13px' }}>{saveError}</span>}
+            </div>
+          </div>
         )}
       </div>
     </div>

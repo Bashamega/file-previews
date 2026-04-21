@@ -15,6 +15,8 @@ import { EpubFilePreview } from './file-preview/epub-file-preview';
 export interface PreviewHandlerProps {
   url: string;
   mimeType: string;
+  editable?: boolean;
+  onSave?: (content: string | Blob) => void | Promise<void>;
 }
 
 export type PreviewHandler = React.FC<PreviewHandlerProps>;
