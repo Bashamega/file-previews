@@ -34,6 +34,8 @@ const mimeMap: Record<string, string> = {
   'pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
   'ppt': 'application/vnd.ms-powerpoint',
   'csv': 'text/csv',
+  'md': 'text/markdown',
+  'markdown': 'text/markdown',
 };
 
 function getMimeFromUrl(url: string): string | null {
@@ -74,7 +76,23 @@ export function useFileType(url: string, method: DetectionMethod = 'request'): F
         if (!isMounted) return;
 
         if (response.ok) {
-          const contentType = response.headers.get('content-type');
+          // Handle case where markdown files might sometimes return text/plain or similar generic types
+          let contentType = response.headers.get('content-type');
+          // Fallback to file extension-based detection if ambiguous/unknown type
+          if (
+            contentType !== null &&
+            (
+              contentType === 'application/octet-stream' ||
+              contentType === 'text/plain' ||
+              contentType === 'text/x-markdown'
+            )
+          ) {
+            const urlMime = getMimeFromUrl(url);
+            // If extension indicates markdown, return the correct mime type
+            if (urlMime === 'text/markdown') {
+              contentType = 'text/markdown';
+            }
+          }
           setInfo({ mimeType: contentType, loading: false, error: null });
         } else {
           throw new Error(`Failed to fetch file type: ${response.statusText}`);

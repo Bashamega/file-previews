@@ -15,6 +15,7 @@ The following file types are supported out of the box:
 - **Video**: All `video/*` types (e.g., MP4, WebM)
 - **PDF**: PDF documents (`application/pdf`)
 - **CSV**: CSV spreadsheets (`text/csv`)
+- **Markdown**: Markdown documents (`text/markdown`) with Preview and Code tabs
 - **Text/Code**: Plain text, JSON, JavaScript, and XML
 - **Word Documents**: `.doc` and `.docx` files
 - **Excel Spreadsheets**: `.xls` and `.xlsx` files
