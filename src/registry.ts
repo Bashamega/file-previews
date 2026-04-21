@@ -9,6 +9,7 @@ import { ExcelFilePreview } from './file-preview/excel-file-preview';
 import { PowerPointFilePreview } from './file-preview/powerpoint-file-preview';
 import { CsvFilePreview } from './file-preview/csv-file-preview';
 import { MarkdownFilePreview } from './file-preview/markdown-file-preview';
+import { RtfFilePreview } from './file-preview/rtf-file-preview';
 
 export interface PreviewHandlerProps {
   url: string;
@@ -46,6 +47,10 @@ export const previewRegistry: RegistryEntry[] = [
   {
     test: (mimeType: string) => mimeType === 'text/markdown',
     component: MarkdownFilePreview as PreviewHandler,
+  },
+  {
+    test: (mimeType: string) => mimeType === 'application/rtf' || mimeType === 'text/rtf',
+    component: RtfFilePreview as PreviewHandler,
   },
   {
     test: (mimeType: string) => 

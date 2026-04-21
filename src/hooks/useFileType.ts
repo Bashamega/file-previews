@@ -38,6 +38,7 @@ const mimeMap: Record<string, string> = {
   'markdown': 'text/markdown',
   'yaml': 'application/x-yaml',
   'yml': 'application/x-yaml',
+  'rtf': 'application/rtf',
 };
 
 function getMimeFromUrl(url: string): string | null {
