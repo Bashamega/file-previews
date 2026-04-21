@@ -68,7 +68,13 @@ export const previewRegistry: RegistryEntry[] = [
       mimeType === 'application/xml' ||
       mimeType === 'application/x-yaml' ||
       mimeType === 'text/yaml',
-    component: TextFilePreview as PreviewHandler,
+    component: (props) => {
+      let lang: string | undefined = undefined;
+      if (props.mimeType === 'application/json') lang = 'json';
+      else if (props.mimeType === 'application/xml') lang = 'xml';
+      else if (props.mimeType === 'application/x-yaml' || props.mimeType === 'text/yaml') lang = 'yaml';
+      return <TextFilePreview {...props} lang={lang} />;
+    },
   },
   {
     test: (mimeType: string) => 

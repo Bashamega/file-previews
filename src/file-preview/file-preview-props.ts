@@ -3,4 +3,5 @@ export interface FilePreviewProps {
   mimeType: string;
   editable?: boolean;
   onSave?: (content: string | Blob) => void | Promise<void>;
+  lang?: string
 }
