@@ -39,6 +39,7 @@ const mimeMap: Record<string, string> = {
   'yaml': 'application/x-yaml',
   'yml': 'application/x-yaml',
   'rtf': 'application/rtf',
+  'epub': 'application/epub+zip',
 };
 
 function getMimeFromUrl(url: string): string | null {

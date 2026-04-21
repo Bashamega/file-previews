@@ -1,6 +1,6 @@
 {
   "name": "react-file-previews",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "type": "module",
   "main": "./dist/react-file-previews.umd.cjs",
   "module": "./dist/react-file-previews.js",
@@ -36,6 +36,7 @@
     "vite-plugin-dts": "^3.0.0"
   },
   "dependencies": {
+    "epubjs": "^0.3.93",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1"
   }
