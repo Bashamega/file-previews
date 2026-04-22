@@ -1,6 +1,6 @@
 {
   "name": "react-file-previews",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "type": "module",
   "main": "./dist/react-file-previews.umd.cjs",
   "module": "./dist/react-file-previews.js",
@@ -39,6 +39,7 @@
     "@monaco-editor/react": "^4.7.0",
     "@pqina/pintura": "^8.97.0",
     "epubjs": "^0.3.93",
+    "exceljs": "^4.4.0",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1"
   }

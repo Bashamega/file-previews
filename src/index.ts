@@ -14,3 +14,4 @@ export * from './file-preview/markdown-file-preview';
 export * from './file-preview/rtf-file-preview';
 export * from './file-preview/epub-file-preview';
 export * from './file-preview/default-file-preview';
+export * from './components/ExcelEditor';

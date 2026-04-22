@@ -69,6 +69,7 @@ const App = () => {
           <button onClick={() => { setUrl('https://raw.githubusercontent.com/mdn/learning-area/master/javascript/oojs/json/superheroes.json'); setInputUrl('https://raw.githubusercontent.com/mdn/learning-area/master/javascript/oojs/json/superheroes.json'); }}>JSON (Code)</button>
           <button onClick={() => { setUrl('https://raw.githubusercontent.com/facebook/react/main/README.md'); setInputUrl('https://raw.githubusercontent.com/facebook/react/main/README.md'); }}>Markdown</button>
           <button onClick={() => { setUrl('https://raw.githubusercontent.com/facebook/react/main/packages/react/index.js'); setInputUrl('https://raw.githubusercontent.com/facebook/react/main/packages/react/index.js'); }}>JS (Code)</button>
+          <button onClick={() => { setUrl('https://raw.githubusercontent.com/sheetjs/sheetjs/master/test_files/formula_stress_test.xlsx'); setInputUrl('https://raw.githubusercontent.com/sheetjs/sheetjs/master/test_files/formula_stress_test.xlsx'); }}>Excel</button>
         </div>
       </div>
 
